@@ -1,0 +1,22 @@
+{% extends 'template.html' %}
+
+{% block content %}
+
+<div class='mb-4'>
+<h1>Bem-vindo à seção de análise do dataset!</h1>
+</div>
+
+<ul>
+    <li><a href="{{ url_for('analysis_bp.rent_vs_hoa') }}">Aluguel vs Condomínio</a></li>
+    <li><a href="{{ url_for('analysis_bp.rent_vs_area') }}">Aluguel vs Área</a></li>
+    <li><a href="{{ url_for('analysis_bp.rent_vs_property_tax') }}">Aluguel vs IPTU</a></li>
+    <li><a href="{{ url_for('analysis_bp.rent_vs_fire_insurance') }}">Aluguel vs Seguro de incêndio</a></li>
+</ul>
+
+<div class="mt-4">
+
+    <h4>Amostra da tabela (10 registros)</h4>
+    {{ table|safe }}
+</div>
+
+{% endblock %}

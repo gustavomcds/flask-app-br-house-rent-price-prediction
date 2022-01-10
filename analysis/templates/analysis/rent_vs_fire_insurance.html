@@ -1,0 +1,89 @@
+{% extends 'template.html' %}
+
+{% block content %}
+
+<div>
+    <canvas id="rent-vs-fire-insurance", width="1200", height="400"></canvas>
+</div>
+
+<div class="text-center mt-4">
+    <button class='btn btn-light' onclick="resetZoom()">Reset Zoom</button>
+</div>
+
+<script>
+
+    let ctx = document.getElementById("rent-vs-fire-insurance").getContext("2d")
+
+    const data = {
+        labels: {{ fire_insurance | tojson }}, 
+        datasets: [{
+            label: 'Aluguel x Seguro de incêndio', 
+            data: {{ rent | tojson }}
+        }]
+    };
+
+    const config = {
+        type: 'scatter', 
+        data: data, 
+        options: {
+            responsive: true, 
+            plugins: {
+                zoom: {
+                    pan: {
+                        enabled: true, 
+                        mode: 'xy', 
+                        modifierKey: 'ctrl'
+                    },
+                    zoom: {
+                        drag: {
+                            enabled: true
+                        }, 
+                        wheel: {
+                            enabled: true
+                        }, 
+                        pinch: {
+                            enabled: true
+                        }, 
+                        mode: 'xy'
+                    }
+                }, 
+                title: {
+                    display: true, 
+                    text: 'Comparação - Aluguel vs Seguro de incêndio'
+                }, 
+            }, 
+            scales: {
+                x: {
+                    display: true, 
+                    type: 'linear', 
+                    title: {
+                        display: true, 
+                        text: 'Seguro de incêndio', 
+                        align: 'center'
+                    }
+                }, 
+                y: {
+                    display: true, 
+                    type: 'linear', 
+                    title: {
+                        display: true, 
+                        text: 'Aluguel', 
+                        align: 'center'
+                    }
+                }
+            }
+        },
+    };
+
+    let chart = new Chart(
+        ctx, 
+        config
+    );
+
+    function resetZoom() {
+        chart.resetZoom();
+    }
+
+</script>
+
+{% endblock %}
